@@ -12,7 +12,9 @@ function getAll(req, res, next) {
         if (retrieveError) return next(retrieveError);
 
         // return the data
-        res.users = data;
+        res.users = data.map(function(user){
+          return user.name;
+        });
         db.close();
         return next();
       });
@@ -56,6 +58,9 @@ function getAll(req, res, next) {
   return false;
 }
 
+//todo SEARCH
+
+//todo UPDATE
 
 
 module.exports = {
