@@ -12,9 +12,7 @@ function getAll(req, res, next) {
         if (retrieveError) return next(retrieveError);
 
         // return the data
-        res.users = data.map(function(user){
-          return user.name;
-        });
+        res.users = data;
         db.close();
         return next();
       });
@@ -42,11 +40,11 @@ function getAll(req, res, next) {
 
 //deletes a user from the collection
  function deleteUser(req, res, next) {
-  getDB().then((err, db) => {
+  getDB().then((db, err) => {
     if (err) return next(err);
 
     db.collection('users')
-      .findAndRemove({ _id: ObjectID(req.params.id) }, (removeErr, doc) => {
+      .remove({ _id: ObjectID(req.params.id) }, (removeErr, doc) => {
         if (removeErr) return next(removeErr);
 
         res.removed = doc;
@@ -60,11 +58,23 @@ function getAll(req, res, next) {
 
 //todo SEARCH
 
-//todo UPDATE
+ function update(req, res, next) {
+  getDB().then((db, err) => {
+    if (err) return next(err);
+    console.log('Trying to update user: ', req.params.id);
+
+    db.collection('users')
+      .update({ _id: ObjectID(req.params.id) }, { $set : req.body.user });
+    db.close();
+    //return next();
+  });
+}
+
 
 
 module.exports = {
   getAll,
   add,
-  deleteUser
+  deleteUser,
+  update
 };

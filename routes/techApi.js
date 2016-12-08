@@ -3,7 +3,6 @@ const controller    = require('../models/techController');
 
 
 router.get('/suggestions', controller.getSuggestions, (req, res) => {
-  console.log(res.suggestions);
   res.json(res.suggestions);
 });
 
