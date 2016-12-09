@@ -2,7 +2,7 @@ const { ObjectID } = require('mongodb');
 const { getDB }    = require('../lib/dbConnect.js');
 
 
-//returns all docs in collection
+//returns all users in collection
 function getAll(req, res, next) {
   getDB().then((db, err) => {
     if (err) return next(err);
@@ -11,7 +11,6 @@ function getAll(req, res, next) {
       .toArray((retrieveError, data) => {
         if (retrieveError) return next(retrieveError);
 
-        // return the data
         res.users = data;
         db.close();
         return next();
@@ -56,17 +55,37 @@ function getAll(req, res, next) {
   return false;
 }
 
-//todo SEARCH
+
+function search(req, res, next) {
+  const nameRegex = new RegExp('^' + req.query.name , 'i');
+  const techRegex = new RegExp('^' + req.query.tech , 'i');
+  getDB().then((db, err) => {
+    if (err) return next(err);
+    db.collection('users')
+      .find({ name: nameRegex, technologies : {$elemMatch: {name: techRegex}}})
+      .toArray((retrieveError, data) => {
+        if (retrieveError) return next(retrieveError);
+
+        res.user = data;
+        db.close();
+        return next();
+      });
+    return false;
+  });
+  return false;
+}
+
 
  function update(req, res, next) {
   getDB().then((db, err) => {
     if (err) return next(err);
-    console.log('Trying to update user: ', req.params.id);
+    const userObject = req.body.user;
+    userObject.technology = ObjectID(userObject.technology);
 
     db.collection('users')
-      .update({ _id: ObjectID(req.params.id) }, { $set : req.body.user });
+      .update({ _id: ObjectID(req.params.id) }, { $set : userObject });
     db.close();
-    //return next();
+    return next();
   });
 }
 
@@ -76,5 +95,6 @@ module.exports = {
   getAll,
   add,
   deleteUser,
-  update
+  update,
+  search
 };

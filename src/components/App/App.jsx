@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
-import './App.css';
+//import './App.css';
 
 class App extends Component {
+    constructor() {
+    super();
+    this.state = {
+
+
+      };
+
+
+
+    }
+
+
+
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <h2>contriSHARE</h2>
-          <h4>never have a ban on your potential</h4>
-        </div>
-        <p className="App-intro">
+      <container>
+      <header>
+        <h1>contriShare</h1>
+      </header>
+        <Users />
 
-        </p>
-      </div>
+      </container>
     );
   }
 }
