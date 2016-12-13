@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
+import Users from '../Users/Users';
+import { Link } from 'react-router'
 //import './App.css';
 
 class App extends Component {
-    constructor() {
-    super();
-    this.state = {
-
-
-      };
-
-
-
-    }
-
 
 
 
@@ -22,7 +13,11 @@ class App extends Component {
       <header>
         <h1>contriShare</h1>
       </header>
-        <Users />
+
+     <ul role="nav">
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/users">Users</Link></li>
+    </ul>
 
       </container>
     );

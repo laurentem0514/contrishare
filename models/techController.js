@@ -47,14 +47,14 @@ function getSuggestions(req, res, next) {
   getDB().then((db, err) => {
     if (err) return next(err);
     db.collection('technologies')
-      .find({'name' : nameRegex }, {'name' : 1, '_id' : 0})
+      .find({'name' : nameRegex }, {'name' : 1, '_id' : 1})
       .sort({'name' : 1})
       .toArray((arrayError, data) => {
         if (arrayError) return next(arrayError);
 
         // return the data
         res.suggestions = data.map(function(tech){
-          return tech.name;
+          return { name: tech.name, id: tech._id };
         });
         db.close();
         return next();

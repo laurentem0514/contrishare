@@ -58,11 +58,11 @@ function getAll(req, res, next) {
 
 function search(req, res, next) {
   const nameRegex = new RegExp('^' + req.query.name , 'i');
-  const techRegex = new RegExp('^' + req.query.tech , 'i');
+
   getDB().then((db, err) => {
     if (err) return next(err);
     db.collection('users')
-      .find({ name: nameRegex, technologies : {$elemMatch: {name: techRegex}}})
+      .find({ name: nameRegex, technologies : {$elemMatch: {id: req.query.techId}}})
       .toArray((retrieveError, data) => {
         if (retrieveError) return next(retrieveError);
 
