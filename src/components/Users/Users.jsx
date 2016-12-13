@@ -30,7 +30,6 @@ class Users extends Component {
   }
 
 
-
   handleSubmitSearch() {
     fetch(`http://localhost:3000/api/users/search?name=${this.state.nameSearch}&techId=${this.state.searchTechId}`)
     .then(r => r.json())

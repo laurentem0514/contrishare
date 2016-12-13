@@ -2,16 +2,16 @@ const { ObjectID } = require('mongodb');
 const { getDB }    = require('../lib/dbConnect.js');
 
 
-//returns all users in collection
+//returns all projects in collection
 function getAll(req, res, next) {
   getDB().then((db, err) => {
     if (err) return next(err);
-    db.collection('users')
+    db.collection('projects')
       .find()
       .toArray((retrieveError, data) => {
         if (retrieveError) return next(retrieveError);
 
-        res.users = data;
+        res.projects = data;
         db.close();
         return next();
       });
@@ -20,12 +20,12 @@ function getAll(req, res, next) {
   return false;
 }
 
-//adds a user to the collection
+//adds a project to the collection
  function add(req, res, next) {
   console.log(req.body);
   getDB().then((db, err) => {
    if (err) return next(err);
-    db.collection('users')
+    db.collection('projects')
       .insert(req.body, (insertErr, result) =>{
         if (insertErr) return next(insertErr);
 
@@ -38,12 +38,12 @@ function getAll(req, res, next) {
   return false;
  }
 
-//deletes a user from the collection
- function deleteUser(req, res, next) {
+//deletes a project from the collection
+ function deleteProject(req, res, next) {
   getDB().then((db, err) => {
     if (err) return next(err);
 
-    db.collection('users')
+    db.collection('projects')
       .remove({ _id: ObjectID(req.params.id) }, (removeErr, doc) => {
         if (removeErr) return next(removeErr);
 
@@ -62,12 +62,12 @@ function search(req, res, next) {
 
   getDB().then((db, err) => {
     if (err) return next(err);
-    db.collection('users')
-      .find({ name: nameRegex, technologies : {$elemMatch: {id: req.query.techId}}})
+    db.collection('projects')
+      .find({ name: nameRegex })
       .toArray((retrieveError, data) => {
         if (retrieveError) return next(retrieveError);
 
-        res.user = data;
+        res.project = data;
         db.close();
         return next();
       });
@@ -80,11 +80,9 @@ function search(req, res, next) {
  function update(req, res, next) {
   getDB().then((db, err) => {
     if (err) return next(err);
-    const userObject = req.body;
-    userObject.technology = ObjectID(userObject.technology);
-
-    db.collection('users')
-      .update({ _id: ObjectID(req.params.id) }, { $set : userObject });
+    const projectObject = req.body;
+    db.collection('projects')
+      .update({ _id: ObjectID(req.params.id) }, { $set : projectObject });
     db.close();
     return next();
   });
@@ -95,7 +93,7 @@ function search(req, res, next) {
 module.exports = {
   getAll,
   add,
-  deleteUser,
+  deleteProject,
   update,
   search
 };
