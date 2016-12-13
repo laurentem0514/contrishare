@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Users from '../Users/Users';
-import { Link } from 'react-router'
+import Nav from '../Nav/Nav';
+
 //import './App.css';
 
 class App extends Component {
@@ -10,15 +10,10 @@ class App extends Component {
   render() {
     return (
       <container>
-      <header>
-        <h1>contriShare</h1>
-      </header>
-
-     <ul role="nav">
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/users">Users</Link></li>
-    </ul>
-
+        <Nav />
+        <header>
+          <h1>contriShare</h1>
+        </header>
       </container>
     );
   }

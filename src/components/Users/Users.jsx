@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Nav from '../Nav/Nav';
 import Autocomplete from 'react-autocomplete';
 //import './Users.css';
 
@@ -65,6 +66,7 @@ class Users extends Component {
 
     return (
         <div>
+          <Nav />
           <div id="users-search">
             <input
               type="text"

@@ -22,10 +22,11 @@ function getAll(req, res, next) {
 
 //adds a user to the collection
  function add(req, res, next) {
+  console.log(req.body);
   getDB().then((db, err) => {
    if (err) return next(err);
     db.collection('users')
-      .insert(req.body.users, (insertErr, result) =>{
+      .insert(req.body, (insertErr, result) =>{
         if (insertErr) return next(insertErr);
 
         res.saved = result;
