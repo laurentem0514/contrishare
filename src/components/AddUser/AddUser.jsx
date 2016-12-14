@@ -24,13 +24,12 @@ class AddUser extends Component {
   handleCreate(){
     // web request to endpoint POST /api/users
 
-
     fetch('http://localhost:3000/api/users',
       {
         method: "POST",
         headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
+        "Content-type": "application/json; charset=UTF-8"
+        },
         body: JSON.stringify( {name : this.state.name} )
       }
       )

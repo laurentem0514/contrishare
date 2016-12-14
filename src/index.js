@@ -5,6 +5,7 @@ import App from './components/App/App';
 import Users from './components/Users/Users';
 import AddUser from './components/AddUser/AddUser';
 import Projects from './components/Projects/Projects';
+import Contrib from './components/Contrib/Contrib';
 
 import './index.css';
 
@@ -15,6 +16,7 @@ ReactDOM.render(
     <Route path="/users" component={Users}/>
     <Route path="/users/add" component={AddUser}/>
     <Route path="/projects" component={Projects}/>
+    <Route path="/contrib" component={Contrib}/>
   </Router>
 ),
   document.getElementById('root')

@@ -7,6 +7,7 @@ const path        = require('path');
 const techsRoute  = require('./routes/techApi');
 const usersRoute  = require('./routes/usersApi');
 const projectsRoute  = require('./routes/projectsApi');
+const contribRoute  = require('./routes/contribApi');
 
 // This tests to see if we have NODE_ENV in our environment.
 // Only load the dotenv if we need it.
@@ -31,6 +32,7 @@ app.use(function(req, res, next) {
 app.use('/api/tech', techsRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/projects', projectsRoute);
+app.use('/api/contrib', contribRoute);
 // generic error handler
 app.use((err, req, res, next) => {
   console.error(err, next);
