@@ -53,10 +53,12 @@ class Users extends Component {
     const users = this.state.users.map(
        (user, i)=> {
         return (
-          <Col className="card" xs={12} md={3} key={i}>
-            <Image src="images/avatarHar.jpg" alt="Harvey" rounded/>
-            <div>
-              <Link to={{ pathname: "/users/" + user._id}}>{user.name}</Link>
+          <Col xs={12} md={3} key={i}>
+            <div className="card">
+              <Image src="images/avatarHar.jpg" alt="Harvey" rounded/>
+              <div>
+                <Link to={{ pathname: "/users/" + user._id}}>{user.name}</Link>
+              </div>
             </div>
           </Col>
           )
@@ -65,29 +67,33 @@ class Users extends Component {
     return (
         <div>
           <Navigation />
-          <div id="users-search">
-            <input
-              type="text"
-              value={this.state.nameSearch}
-              onChange={event=>this.handleUpdateName(event)}
-              placeholder="Search by name..."
-            />
-            <Autocomplete
-              inputProps={{name: "technologies", id: "techs-autocomplete", placeholder: "Technology..."}}
-              ref="autocomplete"
-              value={this.state.techSearch}
-              items={this.state.technologies}
-              getItemValue={(item) => item.id}
-              onSelect={(value, item) => {
-                this.setState({ searchTechId:value, techSearch: item.name, technologies: [ item ] })
-              }}
-              onChange={(event, value) => this.techOnChange(event, value)}
-              renderItem={(item, isHighlighted) => (
-                <div key={item.id} id={`t${item.id}`}>{item.name}</div>
-              )}
-            />
-            <Button bsStyle="primary" bsSize="small" onClick={()=>this.handleSubmitSearch()}>Search</Button>
-          </div>
+          <Grid id="users-search">
+            <Row>
+              <Col xs={12} md={12}>
+                <input
+                  type="text"
+                  value={this.state.nameSearch}
+                  onChange={event=>this.handleUpdateName(event)}
+                  placeholder="Search by name..."
+                />
+                <Autocomplete
+                  inputProps={{name: "technologies", id: "techs-autocomplete", placeholder: "Technology..."}}
+                  ref="autocomplete"
+                  value={this.state.techSearch}
+                  items={this.state.technologies}
+                  getItemValue={(item) => item.id}
+                  onSelect={(value, item) => {
+                    this.setState({ searchTechId:value, techSearch: item.name, technologies: [ item ] })
+                  }}
+                  onChange={(event, value) => this.techOnChange(event, value)}
+                  renderItem={(item, isHighlighted) => (
+                    <div key={item.id} id={`t${item.id}`}>{item.name}</div>
+                  )}
+                />
+                <Button bsStyle="primary" bsSize="small" onClick={()=>this.handleSubmitSearch()}>Search</Button>
+              </Col>
+            </Row>
+          </Grid>
           <div className="users-results">
            <Grid>
              <Row>
