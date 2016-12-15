@@ -27,7 +27,6 @@ function getOne(req, res, next) {
       .findOne({ _id: ObjectID(req.params.id) })
       .then((data) => {
         //if (retrieveError) return next(retrieveError);
-
         res.user = data;
         db.close();
         return next();
@@ -36,6 +35,8 @@ function getOne(req, res, next) {
   });
   return false;
 }
+
+
 //adds a user to the collection
  function add(req, res, next) {
   console.log(req.body);

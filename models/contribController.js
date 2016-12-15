@@ -75,6 +75,7 @@ function search(req, res, next) {
 }
 
 
+
  function update(req, res, next) {
   getDB().then((db, err) => {
     if (err) return next(err);

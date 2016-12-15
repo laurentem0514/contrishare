@@ -108,6 +108,8 @@ class User extends Component {
         (contrib, i) => {
           return (
             <tr key={i}>
+              <td>{contrib.projectId}</td>
+              <td>{contrib.techId}</td>
               <td>{ contrib.description }</td>
               <td>{contrib.duration}</td>
             </tr>
@@ -120,6 +122,8 @@ class User extends Component {
           <Table striped bordered condensed hover>
             <thead>
               <tr>
+                <th>Project Name</th>
+                <th>Technology</th>
                 <th>Description</th>
                 <th>Duration</th>
               </tr>

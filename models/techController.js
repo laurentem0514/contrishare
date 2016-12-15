@@ -27,7 +27,7 @@ function getAll(req, res, next) {
   getDB().then((db, err) => {
    if (err) return next(err);
     db.collection('technologies')
-      .insert(req.body.tech, (insertErr, result) =>{
+      .insert(req.body, (insertErr, result) =>{
         if (insertErr) return next(insertErr);
 
         res.saved = result;
