@@ -57,24 +57,22 @@ function getAll(req, res, next) {
 }
 
 
-// function search(req, res, next) {
-//   const nameRegex = new RegExp('^' + req.query.name , 'i');
+function search(req, res, next) {
+  getDB().then((db, err) => {
+    if (err) return next(err);
+    db.collection('contributions')
+      .find({ userId: req.query.userId})
+      .toArray((retrieveError, data) => {
+        if (retrieveError) return next(retrieveError);
 
-//   getDB().then((db, err) => {
-//     if (err) return next(err);
-//     db.collection('contribs')
-//       .find({ name: nameRegex, technologies : {$elemMatch: {id: req.query.techId}}})
-//       .toArray((retrieveError, data) => {
-//         if (retrieveError) return next(retrieveError);
-
-//         res.user = data;
-//         db.close();
-//         return next();
-//       });
-//     return false;
-//   });
-//   return false;
-// }
+        res.contrib = data;
+        db.close();
+        return next();
+      });
+    return false;
+  });
+  return false;
+}
 
 
  function update(req, res, next) {
@@ -97,5 +95,5 @@ module.exports = {
   add,
   deleteContrib,
   update,
-  //search
+  search
 };

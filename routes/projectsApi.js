@@ -9,6 +9,9 @@ router.put('/:id', controller.update, (req, res) => {
   res.sendStatus(200);
 });
 
+router.get('/suggestions', controller.getSuggestions, (req, res) => {
+  res.json(res.suggestions);
+});
 
 router.get('/', controller.getAll, (req, res) => {
   res.json(res.projects);

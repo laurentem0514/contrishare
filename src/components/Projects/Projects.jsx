@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Nav from '../Nav/Nav';
-//import Autocomplete from 'react-autocomplete';
+import Navigation from '../Nav/Nav';
+import { Button } from 'react-bootstrap';
+import Autocomplete from 'react-autocomplete';
 //import './Projects.css';
 
 
@@ -9,6 +10,7 @@ class Projects extends Component {
     super();
     this.state = {
         nameSearch: '',
+        projectId: '',
         projects: [],
 
     };
@@ -32,6 +34,19 @@ class Projects extends Component {
     .catch(err => console.log('Error: ',err));
   }
 
+  nameOnChange(event, value) {
+    this.setState({ nameSearch:value, loading: true })
+    fetch(`http://localhost:3000/api/projects/suggestions?text=${value}`)
+    .then(r => r.json())
+    .then((data) => {
+      this.setState({
+        projects: data
+      });
+    })
+    .catch(err => console.log('Error: ',err));
+
+  }
+
 
   render() {
     const projects = this.state.projects.map(
@@ -45,33 +60,27 @@ class Projects extends Component {
 
     return (
         <div>
-          <Nav />
+          <Navigation />
           <div id="projects-search">
-            <input
-              type="text"
-              value={this.state.nameSearch}
-              onChange={event=>this.handleUpdateName(event)}
-              placeholder="Search by name..."
-            />
-            {/*<Autocomplete
-              inputProps={{name: "technologies", id: "techs-autocomplete", placeholder: "Technology..."}}
+            <Autocomplete
+              inputProps={{name: "projects", id: "projects-autocomplete", placeholder: "Project Name"}}
               ref="autocomplete"
-              value={this.state.techSearch}
-              items={this.state.technologies}
+              value={this.state.nameSearch}
+              items={this.state.projects}
               getItemValue={(item) => item.id}
               onSelect={(value, item) => {
-                this.setState({ searchTechId:value, techSearch: item.name, technologies: [ item ] })
+                this.setState({ projectId:value, nameSearch: item.name, projects: [ item ] })
               }}
-              onChange={(event, value) => this.techOnChange(event, value)}
+              onChange={(event, value) => this.nameOnChange(event, value)}
               renderItem={(item, isHighlighted) => (
                 <div key={item.id} id={`t${item.id}`}>{item.name}</div>
               )}
-            />*/}
-            <button onClick={()=>this.handleSubmitSearch()}>Search</button>
+            />
+            <Button bsStyle="primary" bsSize="small" onClick={()=>this.handleSubmitSearch()}>Search</Button>
           </div>
           <div className="projects-results">
             {projects}
-          {/*message for no users found*/}
+          {/*message for no results found*/}
           </div>
         </div>
       );

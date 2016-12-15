@@ -56,6 +56,27 @@ function getAll(req, res, next) {
   return false;
 }
 
+function getSuggestions(req, res, next) {
+  const nameRegex = new RegExp('^' + req.query.text , 'i');
+  getDB().then((db, err) => {
+    if (err) return next(err);
+    db.collection('projects')
+      .find({'name' : nameRegex }, {'name' : 1, '_id' : 1})
+      .sort({'name' : 1})
+      .toArray((arrayError, data) => {
+        if (arrayError) return next(arrayError);
+
+        // return the data
+        res.suggestions = data.map(function(projects){
+          return { name: projects.name, id: projects._id };
+        });
+        db.close();
+        return next();
+      });
+      return false;
+  });
+  return false;
+}
 
 function search(req, res, next) {
   const nameRegex = new RegExp('^' + req.query.name , 'i');
@@ -95,5 +116,6 @@ module.exports = {
   add,
   deleteProject,
   update,
-  search
+  search,
+  getSuggestions
 };

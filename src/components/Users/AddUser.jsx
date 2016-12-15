@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
-import Nav from '../Nav/Nav';
-import { Router } from 'react-router';
+import Navigation from '../Nav/Nav';
+import { Button, DropdownButton, MenuItem } from 'react-bootstrap';
 
 
 class AddUser extends Component {
   constructor(){
     super();
     this.state = {
+      avatar: '',
       name: ''
     };
   }
 
-  static get contextTypes() {
-    return {
-      router: React.PropTypes.object.isRequired,
-    };
-  }
 
   nameChange(e){
     this.setState({name: e.target.value});
@@ -33,24 +29,33 @@ class AddUser extends Component {
         body: JSON.stringify( {name : this.state.name} )
       }
       )
-    .then(r => r.json())
-    .then((data) => {
-      //this.context.router.push('/users');
-      })
+    // .then(r => r.json())
+    // .then((data) => {
+    //   //this.context.router.push('/users');
+    //   //browserHistory.push('/users');
+    //   })
     .catch(err => console.log('Error: ',err));
   }
 
   render(){
     return(
     <container>
-      <Nav />
+      <Navigation />
+      <div>Add New User</div>
+      <DropdownButton title="Select an Avatar">
+        <MenuItem src="images/avatar1.png">Avatar 1</MenuItem>
+        <MenuItem href="#podcasts">Podcasts</MenuItem>
+        <MenuItem href="#">Tech I Like</MenuItem>
+        <MenuItem href="#">About me</MenuItem>
+        <MenuItem href="#addBlog">Add a Blog</MenuItem>
+      </DropdownButton>
       <input
         type="text"
         placeholder="Full Name"
         value={this.state.name}
         onChange={e=> this.nameChange(e)}
       />
-      <button onClick={()=>this.handleCreate()}>Create</button>
+      <Button bsStyle="primary" bsSize="small" onClick={()=>this.handleCreate()}>Create</Button>
 
     </container>
     );

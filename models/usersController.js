@@ -20,6 +20,22 @@ function getAll(req, res, next) {
   return false;
 }
 
+function getOne(req, res, next) {
+  getDB().then((db, err) => {
+    if (err) return next(err);
+    db.collection('users')
+      .findOne({ _id: ObjectID(req.params.id) })
+      .then((data) => {
+        //if (retrieveError) return next(retrieveError);
+
+        res.user = data;
+        db.close();
+        return next();
+      });
+    return false;
+  });
+  return false;
+}
 //adds a user to the collection
  function add(req, res, next) {
   console.log(req.body);
@@ -57,17 +73,23 @@ function getAll(req, res, next) {
 }
 
 
-function search(req, res, next) {
-  const nameRegex = new RegExp('^' + req.query.name , 'i');
+function searchUsers(req, res, next) {
+  const query = {};
+  if (req.query.name.length){
+    query.name = new RegExp('^' + req.query.name , 'i');
+  }
+  if (req.query.techId.length){
+    query.technologies = {$elemMatch: {id: req.query.techId}};
+  }
 
   getDB().then((db, err) => {
     if (err) return next(err);
     db.collection('users')
-      .find({ name: nameRegex, technologies : {$elemMatch: {id: req.query.techId}}})
+      .find(query)
       .toArray((retrieveError, data) => {
         if (retrieveError) return next(retrieveError);
 
-        res.user = data;
+        res.data = data;
         db.close();
         return next();
       });
@@ -95,7 +117,8 @@ function search(req, res, next) {
 module.exports = {
   getAll,
   add,
+  getOne,
   deleteUser,
   update,
-  search
+  searchUsers
 };

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Nav from '../Nav/Nav';
+import { Link } from 'react-router';
+import Navigation from '../Nav/Nav';
 import Autocomplete from 'react-autocomplete';
-//import './Users.css';
+import { Button, Grid, Row, Col, Image } from 'react-bootstrap';
+import './Users.css';
 
 
 class Users extends Component {
@@ -18,12 +20,6 @@ class Users extends Component {
   }
 
   handleUpdateName(e) {
-    this.setState({
-      nameSearch: e.target.value
-     });
-  }
-
-  handleUpdateTech(e) {
     this.setState({
       nameSearch: e.target.value
      });
@@ -57,15 +53,18 @@ class Users extends Component {
     const users = this.state.users.map(
        (user, i)=> {
         return (
-          <div key={i}>
-            {user.name}
-          </div>
+          <Col className="card" xs={12} md={3} key={i}>
+            <Image src="images/avatarHar.jpg" alt="Harvey" rounded/>
+            <div>
+              <Link to={{ pathname: "/users/" + user._id}}>{user.name}</Link>
+            </div>
+          </Col>
           )
     }, this);
 
     return (
         <div>
-          <Nav />
+          <Navigation />
           <div id="users-search">
             <input
               type="text"
@@ -87,11 +86,15 @@ class Users extends Component {
                 <div key={item.id} id={`t${item.id}`}>{item.name}</div>
               )}
             />
-            <button onClick={()=>this.handleSubmitSearch()}>Search</button>
+            <Button bsStyle="primary" bsSize="small" onClick={()=>this.handleSubmitSearch()}>Search</Button>
           </div>
           <div className="users-results">
-            {users}
-          {/*message for no users found*/}
+           <Grid>
+             <Row>
+                 {users}
+                 {/*message for no users found*/}
+             </Row>
+           </Grid>
           </div>
         </div>
       );

@@ -1,1 +1,15 @@
-User.css
+.card{
+  text-align: center;
+  border-radius: 10px;
+  color: grey;
+  box-shadow: 2px 2px 13px 0 rgba(1,1,0,.1);
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+  .card img {
+    max-width: 150px;
+    max-height: 150px;
+  }

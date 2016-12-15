@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Nav, NavItem } from 'react-bootstrap';
 
-
-class Nav extends Component {
+class Navigation extends Component {
 
   render(){
     return(
-    <ul>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/users">Users</Link></li>
-      <li><Link to="/projects">Projects</Link></li>
-    </ul>
+      <Nav bsStyle="pills">
+        <LinkContainer to={{ pathname: '/' }}>
+          <NavItem>Home</NavItem>
+        </LinkContainer>
+        <LinkContainer to={{ pathname: '/users' }}>
+          <NavItem>Users</NavItem>
+        </LinkContainer>
+        <LinkContainer to={{ pathname: '/projects' }}>
+          <NavItem>Projects</NavItem>
+        </LinkContainer>
+      </Nav>
     );
   }
 }
 
-export default Nav;
+export default Navigation;
